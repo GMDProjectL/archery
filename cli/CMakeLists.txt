@@ -6,3 +6,4 @@ file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS "src/*.cpp")
 add_executable(archery-cli ${SOURCES})
 
 target_include_directories(archery-cli PRIVATE include)
+target_link_libraries(archery-cli archery-core)

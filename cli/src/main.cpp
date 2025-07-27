@@ -1,5 +1,6 @@
-#include <iostream>
+#include <cli.hpp>
 
 int main(int, char**){
-    std::cout << "Hello, from cli!\n";
+    say_hello();
+    return 0;
 }

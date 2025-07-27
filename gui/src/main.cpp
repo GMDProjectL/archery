@@ -1,5 +1,6 @@
-#include <iostream>
+#include <gui.hpp>
 
 int main(int, char**){
-    std::cout << "Hello, from gui!\n";
+    say_hello();
+    return 0;
 }

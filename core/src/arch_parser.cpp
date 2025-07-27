@@ -3,24 +3,15 @@
 #include <fstream>
 
 
-ArchPackage parse_package_desc(const std::filesystem::path descFilePath) {
-    if (!std::filesystem::exists(descFilePath)) {
-        throw std::runtime_error("Package description file does not exist: " + descFilePath.string());
-    }
 
-    // read the file
-
-    auto fileDescriptor = std::ifstream(descFilePath);
-    if (!fileDescriptor.is_open()) {
-        throw std::runtime_error("Failed to open package description file: " + descFilePath.string());
-    }
+ArchPackage parse_package_metadata(const std::string& contents) {
+    std::string line;
+    std::istringstream stream(contents);
 
     ArchPackage pkg;
-
-    std::string line;
     ArchPackageParsingState state = ArchPackageParsingState::PARSING_NONE;
 
-    while (std::getline(fileDescriptor, line)) {
+    while (std::getline(stream, line)) {
         // Process each line as needed
         if (line == "%NAME%" && state == ArchPackageParsingState::PARSING_NONE) {
             state = ArchPackageParsingState::PARSING_NAME;
@@ -155,6 +146,31 @@ ArchPackage parse_package_desc(const std::filesystem::path descFilePath) {
             continue;
         }
     }
+
+    return pkg;
+}
+
+
+ArchPackage parse_package_desc(const std::filesystem::path descFilePath) {
+    if (!std::filesystem::exists(descFilePath)) {
+        throw std::runtime_error("Package description file does not exist: " + descFilePath.string());
+    }
+
+    // read the file
+
+    auto fileDescriptor = std::ifstream(descFilePath);
+    if (!fileDescriptor.is_open()) {
+        throw std::runtime_error("Failed to open package description file: " + descFilePath.string());
+    }
+
+    std::string contents;
+    std::string line;
+
+    while (std::getline(fileDescriptor, line)) {
+        contents += line + "\n";
+    }
+
+    auto pkg = parse_package_metadata(contents);
 
     return pkg;
 }

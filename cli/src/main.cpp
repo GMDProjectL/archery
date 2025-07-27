@@ -1,15 +1,13 @@
 #include <cli.hpp>
 #include <archery.hpp>
 #include <iostream>
+#include <format>
 
 int main(int, char**){
-    auto packages = get_local_packages();
+    std::string dbName = "core";
+    auto packages = get_remote_packages(dbName);
     for (auto& package : packages) {
-        std::cout << package.m_name << std::endl;
-        if (package.m_uncompressedSize == 0) {
-            std::cerr << "Error: Package " << package.m_name << " has no size." << std::endl;
-            return 1;
-        }
+        std::cout << std::format("{} (version {}) - {} bytes", package.m_name, package.m_version, package.m_uncompressedSize) << std::endl;
     }
     return 0;
 }

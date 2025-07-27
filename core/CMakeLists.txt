@@ -7,7 +7,7 @@ find_package(Qt6 REQUIRED Core)
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(LIBARCHIVE REQUIRED libarchive)
 
-add_library(archery-core ${SOURCES})
+add_library(archery-core SHARED ${SOURCES})
 
 target_include_directories(archery-core PUBLIC include ${LIBARCHIVE_INCLUDE_DIRS})
 target_link_libraries(archery-core Qt6::Core ${LIBARCHIVE_LIBRARIES})

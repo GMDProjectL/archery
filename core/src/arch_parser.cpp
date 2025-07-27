@@ -163,14 +163,10 @@ ArchPackage parse_package_desc(const std::filesystem::path descFilePath) {
         throw std::runtime_error("Failed to open package description file: " + descFilePath.string());
     }
 
-    std::string contents;
-    std::string line;
+    std::stringstream buffer;
+    buffer << fileDescriptor.rdbuf();
 
-    while (std::getline(fileDescriptor, line)) {
-        contents += line + "\n";
-    }
-
-    auto pkg = parse_package_metadata(contents);
+    auto pkg = parse_package_metadata(buffer.str());
 
     return pkg;
 }

@@ -166,7 +166,5 @@ ArchPackage parse_package_desc(const std::filesystem::path descFilePath) {
     std::stringstream buffer;
     buffer << fileDescriptor.rdbuf();
 
-    auto pkg = parse_package_metadata(buffer.str());
-
-    return pkg;
+    return parse_package_metadata(buffer.str());
 }

@@ -1,4 +1,5 @@
 #pragma once
+#include <iterator>
 #include <string>
 #include <vector>
 #include <optional>
@@ -14,6 +15,6 @@ public:
     std::optional<std::vector<std::string>> m_optionalDependencies;
     std::optional<std::vector<std::string>> m_conflicts;
     std::optional<std::string> m_license;
-    std::optional<int> m_compressedSize; // In bytes
+    int m_compressedSize; // In bytes
     int m_uncompressedSize; // In bytes
 };

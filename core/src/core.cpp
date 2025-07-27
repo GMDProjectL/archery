@@ -57,16 +57,13 @@ std::vector<ArchPackage> get_remote_packages(const std::string dbName) {
     while (archive_read_next_header(a, &entry) == ARCHIVE_OK) {
         std::string pathname = archive_entry_pathname(entry);
         
-        // Ищем файлы desc
         if (pathname.find("/desc") != std::string::npos) {
-            // Извлекаем имя пакета из пути (первая часть до /)
             size_t slash_pos = pathname.find('/');
             std::string package_name;
             if (slash_pos != std::string::npos) {
                 package_name = pathname.substr(0, slash_pos);
             }
             
-            // Читаем содержимое файла
             size_t size = archive_entry_size(entry);
             std::vector<char> buffer(size + 1);
             la_ssize_t bytes_read = archive_read_data(a, buffer.data(), size);
@@ -79,7 +76,6 @@ std::vector<ArchPackage> get_remote_packages(const std::string dbName) {
                 packages.push_back(pkg);
             }
         } else {
-            // Пропускаем файл
             archive_read_data_skip(a);
         }
     }
